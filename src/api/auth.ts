@@ -11,13 +11,13 @@ const postFakeForgetPwd = (data: any) =>
 const postJwtForgetPwd = (data: any) =>
   api.create(url.POST_FAKE_JWT_PASSWORD_FORGET, data);
 
-const postFakeLogin = (data: any) => api.create(url.POST_FAKE_LOGIN, data);
+const postLogin = (data: any) => api.create(url.POST_LOGIN, data);
 
 const postJwtLogin = (data: any) => api.create(url.POST_FAKE_JWT_LOGIN, data);
 
 // Register Method
-const postFakeRegister = (data: any) => {
-  return api.create(url.POST_FAKE_REGISTER, data);
+const postRegister = (data: any) => {
+  return api.create(url.POST_REGISTER, data);
 };
 
 // Register Method
@@ -34,9 +34,9 @@ const postSocialLogin = (data: any) => api.create(url.SOCIAL_LOGIN, data);
 export {
   postFakeForgetPwd,
   postJwtForgetPwd,
-  postFakeLogin,
+  postLogin,
   postJwtLogin,
-  postFakeRegister,
+  postRegister,
   postJwtRegister,
   changePassword,
   postSocialLogin,

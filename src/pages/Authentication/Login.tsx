@@ -1,17 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  Alert,
-  Row,
-  Col,
-  Form,
-  Label,
-  Button,
-  UncontrolledTooltip,
-} from "reactstrap";
+import { Alert, Row, Col, Form, Label, Button } from "reactstrap";
 
 //Social Media Imports
-import { GoogleLogin } from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+// import { GoogleLogin } from "react-google-login";
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 // router
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -28,13 +20,22 @@ import config from "../../config";
 import { useProfile, useRedux } from "../../hooks/index";
 import { createSelector } from "reselect";
 //actions
-import { loginUser, socialLogin } from "../../redux/actions";
+import {
+  loginUser,
+  socialLogin,
+  authLoginApiResponseError,
+  authForgetPassApiResponseSuccess,
+  authLoginApiResponseSuccess,
+} from "../../redux/actions";
 
 // components
 import NonAuthLayoutWrapper from "../../components/NonAutnLayoutWrapper";
 import AuthHeader from "../../components/AuthHeader";
 import FormInput from "../../components/FormInput";
 import Loader from "../../components/Loader";
+import { postLogin } from "../../api";
+import toastNotify from "../../utils/toast";
+import { AuthLoginActionTypes } from "../../redux/auth/login/types";
 
 interface LoginProps {}
 const Login = (props: LoginProps) => {
@@ -50,19 +51,18 @@ const Login = (props: LoginProps) => {
   //   })
   // );
 
-
   const errorData = createSelector(
-    (state : any) => state.Login,
-    (state) => ({
+    (state: any) => state.Login,
+    state => ({
       isUserLogin: state.isUserLogin,
       error: state.error,
       loginLoading: state.loading,
       isUserLogout: state.isUserLogout,
-
-    })
+    }),
   );
   // Inside your component
-  const { isUserLogin,error ,loginLoading,isUserLogout} = useAppSelector(errorData);
+  const { isUserLogin, error, loginLoading, isUserLogout } =
+    useAppSelector(errorData);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -84,12 +84,12 @@ const Login = (props: LoginProps) => {
     yup.object().shape({
       email: yup.string().required("Please Enter E-mail."),
       password: yup.string().required("Please Enter Password."),
-    })
+    }),
   );
 
   const defaultValues: any = {
-    email: "admin@themesbrand.com",
-    password: "123456",
+    email: "",
+    password: "",
   };
 
   const methods = useForm({ defaultValues, resolver });
@@ -102,6 +102,22 @@ const Login = (props: LoginProps) => {
 
   const onSubmitForm = async (values: object) => {
     dispatch(loginUser(values));
+    try {
+      const data = await postLogin(values);
+      toastNotify(data ? "Login successful" : "sucecss", "success");
+      dispatch(
+        authLoginApiResponseSuccess(
+          AuthLoginActionTypes.LOGIN_USER,
+          data?.data,
+        ),
+      );
+    } catch (error: any) {
+      toastNotify(error, "error");
+      dispatch(
+        authLoginApiResponseError(AuthLoginActionTypes.LOGIN_USER, error),
+      );
+      console.error(error);
+    }
   };
 
   const { userProfile, loading } = useProfile();
@@ -210,7 +226,7 @@ const Login = (props: LoginProps) => {
                 <Row className="">
                   <div className="col-4">
                     <div>
-                      <FacebookLogin
+                      {/* <FacebookLogin
                         appId={config.FACEBOOK.APP_ID}
                         autoLoad={false}
                         callback={facebookResponse}
@@ -224,11 +240,11 @@ const Login = (props: LoginProps) => {
                             <i className="mdi mdi-facebook text-indigo"></i>
                           </button>
                         )}
-                      />
+                      /> */}
                     </div>
-                    <UncontrolledTooltip placement="top" target="facebook">
+                    {/* <Button placement="top" target="facebook">
                       Facebook
-                    </UncontrolledTooltip>
+                    </Button> */}
                   </div>
                   <div className="col-4">
                     <div>
@@ -240,13 +256,13 @@ const Login = (props: LoginProps) => {
                         <i className="mdi mdi-twitter text-info"></i>
                       </button>
                     </div>
-                    <UncontrolledTooltip placement="top" target="twitter">
+                    {/* <Button placement="top" target="twitter">
                       Twitter
-                    </UncontrolledTooltip>
+                    </Button> */}
                   </div>
                   <div className="col-4">
                     <div>
-                      <GoogleLogin
+                      {/* <GoogleLogin
                         clientId={
                           config.GOOGLE.CLIENT_ID ? config.GOOGLE.CLIENT_ID : ""
                         }
@@ -262,11 +278,11 @@ const Login = (props: LoginProps) => {
                         )}
                         onSuccess={googleResponse}
                         onFailure={() => {}}
-                      />
+                      /> */}
                     </div>
-                    <UncontrolledTooltip placement="top" target="google">
+                    {/* <Button placement="top" target="google">
                       Google
-                    </UncontrolledTooltip>
+                    </Button> */}
                   </div>
                 </Row>
               </div>

@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../config";
+import { useRedux } from "../hooks";
 
 // default
 axios.defaults.baseURL = config.API_URL;
@@ -22,6 +23,9 @@ axios.interceptors.response.use(
       case 401:
         message = "Invalid credentials";
         break;
+      case 400:
+        message = "Invalid credentials";
+        break;
       case 404:
         message = "Sorry! the data you are looking for could not be found";
         break;
@@ -29,7 +33,7 @@ axios.interceptors.response.use(
         message = error.message || error;
     }
     return Promise.reject(message);
-  }
+  },
 );
 
 /**
@@ -45,21 +49,27 @@ class APIClient {
    * Fetches data from given url
    */
   get = (url: string, params?: {}) => {
-    return axios.get(url, params);
+    return axios.get(url, { withCredentials: true, ...params });
   };
 
   /**
    * post given data to url
    */
   create = (url: string, data?: {}) => {
-    return axios.post(url, data);
+    return axios.post(url, data, {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
   };
 
   /**
    * Updates data
    */
   update = (url: string, data?: {}) => {
-    return axios.put(url, data);
+    return axios.put(url, data, {
+      headers: { "Content-Type": "application/json" },
+      withCredentials: true,
+    });
   };
 
   /**
@@ -102,7 +112,7 @@ class APIClient {
     // };
     return axios.post(url, formData);
   };
-};
+}
 
 const getLoggedinUser = () => {
   const user = localStorage.getItem("authUser");

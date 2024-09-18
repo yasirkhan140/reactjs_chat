@@ -37,17 +37,16 @@ const Register = (props: RegisterProps) => {
   // }));
 
   const errorData = createSelector(
-    (state : any) => state.Register,
-    (state) => ({
+    (state: any) => state.Register,
+    state => ({
       user: state.user,
       registrationError: state.registrationError,
       regLoading: state.loading,
       isUserRegistered: state.isUserRegistered,
-
-    })
+    }),
   );
   // Inside your component
-  const { user,registrationError ,regLoading} = useAppSelector(errorData);
+  const { user, registrationError, regLoading } = useAppSelector(errorData);
 
   const resolver = yupResolver(
     yup.object().shape({
@@ -55,9 +54,17 @@ const Register = (props: RegisterProps) => {
         .string()
         .email("This value should be a valid email.")
         .required("Please Enter E-mail."),
-      username: yup.string().required("Please Enter E-mail."),
-      password: yup.string().required("Please Enter Password."),
-    })
+      firstName: yup.string().required("Please Enter First Name"),
+      lastName: yup.string(),
+      password: yup
+        .string()
+        .required("Please Enter Password.")
+        .min(8)
+        .matches(/[0-9]/, "Password requires a number")
+        .matches(/[a-z]/, "Password requires a lowercase letter")
+        .matches(/[A-Z]/, "Password requires an uppercase letter")
+        .matches(/[^\w]/, "Password requires a symbol"),
+    }),
   );
 
   const defaultValues: any = {};
@@ -70,7 +77,7 @@ const Register = (props: RegisterProps) => {
     formState: { errors },
   } = methods;
 
-  const onSubmitForm = (values: object) => {
+  const onSubmitForm = async (values: object) => {
     dispatch(registerUser(values));
   };
 
@@ -119,14 +126,27 @@ const Register = (props: RegisterProps) => {
 
               <div className="mb-3">
                 <FormInput
-                  label="Username"
+                  label="First Name"
                   type="text"
-                  name="username"
+                  name="firstName"
                   register={register}
                   errors={errors}
                   control={control}
                   labelClassName="form-label"
-                  placeholder="Enter username"
+                  placeholder="Enter firstName"
+                  className="form-control"
+                />
+              </div>
+              <div className="mb-3">
+                <FormInput
+                  label="Last Name"
+                  type="text"
+                  name="lastName"
+                  register={register}
+                  errors={errors}
+                  control={control}
+                  labelClassName="form-label"
+                  placeholder="Enter last name"
                   className="form-control"
                 />
               </div>

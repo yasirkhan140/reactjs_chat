@@ -18,27 +18,27 @@ const useProfile = () => {
   // }));
 
   const errorData = createSelector(
-    (state : any) => state.Settings,
-    (state) => ({
+    (state: any) => state.Settings,
+    state => ({
       settings: state.settings,
-    })
+    }),
   );
   // Inside your component
-  const { settings} = useAppSelector(errorData);
-
-
-
+  const { settings } = useAppSelector(errorData);
 
   const image = settings.basicDetails && settings.basicDetails.profile;
   const userProfileSession = getLoggedinUser();
+  console.log(useAppSelector(state => state.Profile));
   const [loading] = useState(userProfileSession ? false : true);
   const [userProfile, setUserProfile] = useState(
-    userProfileSession ? { ...userProfileSession, profileImage: image } : null
+    userProfileSession ? { ...userProfileSession, profileImage: image } : null,
   );
   useEffect(() => {
     const userProfileSession = getLoggedinUser();
     setUserProfile(
-      userProfileSession ? { ...userProfileSession, profileImage: image } : null
+      userProfileSession
+        ? { ...userProfileSession, profileImage: image }
+        : null,
     );
   }, [image]);
 
@@ -53,20 +53,18 @@ const useContacts = () => {
   //   contactsList: state.Contacts.contacts,
   // }));
 
-
-
   const errorData = createSelector(
-    (state : any) => state.Contacts,
-    (state) => ({
+    (state: any) => state.Contacts,
+    state => ({
       contactsList: state.contacts,
-    })
+    }),
   );
   // Inside your component
-  const { contactsList} = useAppSelector(errorData);
+  const { contactsList } = useAppSelector(errorData);
 
   const [contacts, setContacts] = useState<Array<any>>([]);
   const [categorizedContacts, setCategorizedContacts] = useState<Array<any>>(
-    []
+    [],
   );
   useEffect(() => {
     if (contactsList.length > 0) {
@@ -94,13 +92,13 @@ const useConversationUserType = () => {
   // }));
 
   const errorData = createSelector(
-    (state : any) => state.Chats,
-    (state) => ({
+    (state: any) => state.Chats,
+    state => ({
       chatUserDetails: state.chatUserDetails,
-    })
+    }),
   );
   // Inside your component
-  const { chatUserDetails} = useAppSelector(errorData);
+  const { chatUserDetails } = useAppSelector(errorData);
 
   const [isChannel, setIsChannel] = useState<boolean>(false);
   useEffect(() => {

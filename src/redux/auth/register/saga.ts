@@ -9,7 +9,8 @@ import {
 
 //Include Both Helper File with needed methods
 import { getFirebaseBackend } from "../../../helpers/firebase_helper";
-import { postFakeRegister, postJwtRegister } from "../../../api/index";
+import { postRegister, postJwtRegister } from "../../../api/index";
+import toastNotify from "../../../utils/toast";
 
 // initialize relavant method of both Auth
 const fireBaseBackend = getFirebaseBackend();
@@ -17,39 +18,32 @@ const fireBaseBackend = getFirebaseBackend();
 // Is user register successfull then direct plot user in redux.
 function* registerUser({ payload: { user } }: any) {
   try {
-    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      const response: Promise<any> = yield call(
-        fireBaseBackend.registerUser,
-        user.email,
-        user.password
-      );
+    if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
+      const response: Promise<any> = yield call(postRegister, user);
       yield put(
         authRegisterApiResponseSuccess(
           AuthRegisterActionTypes.REGISTER_USER,
-          response
-        )
+          response,
+        ),
       );
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-      const response: Promise<any> = yield call(postJwtRegister, user);
-      yield put(
-        authRegisterApiResponseSuccess(
-          AuthRegisterActionTypes.REGISTER_USER,
-          response
-        )
-      );
+      toastNotify("register successfully", "success");
     } else if (process.env.REACT_APP_DEFAULTAUTH === "fake") {
-      const response: Promise<any> = yield call(postFakeRegister, user);
+      const response: Promise<any> = yield call(postRegister, user);
       yield put(
         authRegisterApiResponseSuccess(
           AuthRegisterActionTypes.REGISTER_USER,
-          response
-        )
+          response,
+        ),
       );
     }
   } catch (error: any) {
     yield put(
-      authRegisterApiResponseError(AuthRegisterActionTypes.REGISTER_USER, error)
+      authRegisterApiResponseError(
+        AuthRegisterActionTypes.REGISTER_USER,
+        error,
+      ),
     );
+    toastNotify(error, "error");
   }
 }
 

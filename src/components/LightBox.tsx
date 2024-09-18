@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css"; // This only needs to be imported once in your app
+// import Lightbox from "react-image-lightbox";
+// import "react-image-lightbox/style.css"; // This only needs to be imported once in your app
 
 interface LightBoxProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ const LightBox = ({ isOpen, onClose, defaultIdx, images }: LightBoxProps) => {
 
   return (
     <>
-      {isOpen && (
+      {/* {isOpen && (
         <Lightbox
           mainSrc={images[photoIndex].downloadLink}
           nextSrc={images[(photoIndex + 1) % images.length].downloadLink}
@@ -37,7 +37,7 @@ const LightBox = ({ isOpen, onClose, defaultIdx, images }: LightBoxProps) => {
           onMovePrevRequest={onPrev}
           onMoveNextRequest={onNext}
         />
-      )}
+      )} */}
     </>
   );
 };

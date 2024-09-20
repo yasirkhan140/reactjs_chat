@@ -8,7 +8,7 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getFirebaseBackend } from "../../../helpers/firebase_helper";
+
 
 import {
   postFakeForgetPwd,
@@ -16,20 +16,12 @@ import {
   changePassword as changePasswordApi,
 } from "../../../api/index";
 
-const fireBaseBackend: any = getFirebaseBackend();
+
 
 //If user is send successfully send mail link then dispatch redux action's are directly from here.
 function* forgetUser({ payload: user }: any) {
   try {
-    if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
-      yield call(fireBaseBackend.forgetPassword, user.email);
-      yield put(
-        authForgetPassApiResponseSuccess(
-          AuthForgetPassActionTypes.FORGET_PASSWORD,
-          "Reset link are sended to your mailbox, check there first"
-        )
-      );
-    } else if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
+     if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
       yield call(postJwtForgetPwd, {
         email: user.email,
       });

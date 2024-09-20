@@ -8,12 +8,12 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import { getFirebaseBackend } from "../../../helpers/firebase_helper";
-import { postRegister, postJwtRegister } from "../../../api/index";
+
+import { postRegister } from "../../../api/index";
 import toastNotify from "../../../utils/toast";
 
 // initialize relavant method of both Auth
-const fireBaseBackend = getFirebaseBackend();
+
 
 // Is user register successfull then direct plot user in redux.
 function* registerUser({ payload: { user } }: any) {
@@ -43,7 +43,7 @@ function* registerUser({ payload: { user } }: any) {
         error,
       ),
     );
-    toastNotify(error, "error");
+    toastNotify(error?.message, "error");
   }
 }
 

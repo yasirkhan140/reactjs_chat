@@ -5,6 +5,7 @@ export const INIT_STATE: AuthRegisterState = {
   message: "",
   loading: false,
   user: null,
+  userOtp:false
 };
 
 const Register = (state = INIT_STATE, action: any) => {
@@ -18,6 +19,7 @@ const Register = (state = INIT_STATE, action: any) => {
             user: action.payload.data,
             registrationError: null,
             isUserRegistered: true,
+            userOtp:true
           };
         default:
           return { ...state };
@@ -31,6 +33,7 @@ const Register = (state = INIT_STATE, action: any) => {
             loading: false,
             registrationError: action.payload.error,
             isUserRegistered: false,
+            userOtp:false
           };
         default:
           return { ...state };
@@ -41,6 +44,7 @@ const Register = (state = INIT_STATE, action: any) => {
         ...state,
         loading: true,
         isUserRegistered: false,
+        userOtp:false
       };
     }
     default:

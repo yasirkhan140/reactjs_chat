@@ -1,6 +1,5 @@
 import axios from "axios";
 import config from "../config";
-import { useRedux } from "../hooks";
 
 // default
 axios.defaults.baseURL = config.API_URL;
@@ -18,13 +17,13 @@ axios.interceptors.response.use(
     let message;
     switch (error.status) {
       case 500:
-        message = "Internal Server Error";
+        message = error?.response?.data?.message;
         break;
       case 401:
         message = "Invalid credentials";
         break;
       case 400:
-        message = "Invalid credentials";
+        message = error?.response?.data?.message;
         break;
       case 404:
         message = "Sorry! the data you are looking for could not be found";
@@ -32,7 +31,7 @@ axios.interceptors.response.use(
       default:
         message = error.message || error;
     }
-    return Promise.reject(message);
+    return Promise.reject({ message, error: error?.response?.data?.errors });
   },
 );
 

@@ -10,4 +10,5 @@ export interface AuthRegisterState {
   message: string;
   loading: boolean;
   user: object | null;
+  userOtp:boolean|null
 }

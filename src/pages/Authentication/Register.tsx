@@ -81,10 +81,9 @@ const Register = (props: RegisterProps) => {
     dispatch(registerUser(values));
   };
 
-  const { userProfile, loading } = useProfile();
-
-  if (userProfile && !loading) {
-    return <Navigate to={{ pathname: "/dashboard" }} />;
+  const { registerData } = useProfile();
+  if (registerData && !registerData.loading && registerData.userOtp) {
+    return <Navigate to={{ pathname: "/auth-otp" }} />;
   }
 
   return (
@@ -101,8 +100,8 @@ const Register = (props: RegisterProps) => {
               <Alert color="success">Register User Successfully</Alert>
             ) : null}
 
-            {registrationError && registrationError ? (
-              <Alert color="danger">{registrationError}</Alert>
+            {registrationError && registrationError.message ? (
+              <Alert color="danger">{registrationError.message}</Alert>
             ) : null}
 
             <Form
@@ -162,6 +161,7 @@ const Register = (props: RegisterProps) => {
                   labelClassName="form-label"
                   className="form-control pe-5"
                   placeholder="Enter Password"
+                  withoutLabel={true}
                 />
               </div>
 

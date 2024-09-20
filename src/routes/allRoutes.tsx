@@ -13,6 +13,7 @@ import LockScreen from "../pages/Authentication/LockScreen";
 // dashboard
 import Dashboard from "../pages/Dashboard/index";
 import StarterPage from "../pages/StarterPage/index";
+import OTP from "../pages/Authentication/OTP";
 
 interface RouteProps {
   path: string;
@@ -23,6 +24,7 @@ interface RouteProps {
 const publicRoutes: Array<RouteProps> = [
   { path: "/auth-login", component: <Login /> },
   { path: "/auth-register", component: <Register /> },
+  { path: "/auth-otp", component: <OTP /> },
   { path: "/auth-recoverpw", component: <RecoverPassword /> },
   { path: "/auth-changepassword", component: <ChangePassword /> },
   { path: "/auth-lock-screen", component: <LockScreen /> },

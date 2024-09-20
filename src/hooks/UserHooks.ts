@@ -25,10 +25,9 @@ const useProfile = () => {
   );
   // Inside your component
   const { settings } = useAppSelector(errorData);
-
+  const registerData=useAppSelector((state)=>state.Register)
   const image = settings.basicDetails && settings.basicDetails.profile;
   const userProfileSession = getLoggedinUser();
-  console.log(useAppSelector(state => state.Profile));
   const [loading] = useState(userProfileSession ? false : true);
   const [userProfile, setUserProfile] = useState(
     userProfileSession ? { ...userProfileSession, profileImage: image } : null,
@@ -42,7 +41,7 @@ const useProfile = () => {
     );
   }, [image]);
 
-  return { userProfile, loading };
+  return { userProfile, loading,registerData };
 };
 
 const useContacts = () => {

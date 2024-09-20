@@ -14,7 +14,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 
 // config
-import config from "../../config";
+
 
 // hooks
 import { useProfile, useRedux } from "../../hooks/index";
@@ -23,9 +23,6 @@ import { createSelector } from "reselect";
 import {
   loginUser,
   socialLogin,
-  authLoginApiResponseError,
-  authForgetPassApiResponseSuccess,
-  authLoginApiResponseSuccess,
 } from "../../redux/actions";
 
 // components
@@ -33,9 +30,7 @@ import NonAuthLayoutWrapper from "../../components/NonAutnLayoutWrapper";
 import AuthHeader from "../../components/AuthHeader";
 import FormInput from "../../components/FormInput";
 import Loader from "../../components/Loader";
-import { postLogin } from "../../api";
-import toastNotify from "../../utils/toast";
-import { AuthLoginActionTypes } from "../../redux/auth/login/types";
+
 
 interface LoginProps {}
 const Login = (props: LoginProps) => {
@@ -102,22 +97,7 @@ const Login = (props: LoginProps) => {
 
   const onSubmitForm = async (values: object) => {
     dispatch(loginUser(values));
-    try {
-      const data = await postLogin(values);
-      toastNotify(data ? "Login successful" : "sucecss", "success");
-      dispatch(
-        authLoginApiResponseSuccess(
-          AuthLoginActionTypes.LOGIN_USER,
-          data?.data,
-        ),
-      );
-    } catch (error: any) {
-      toastNotify(error, "error");
-      dispatch(
-        authLoginApiResponseError(AuthLoginActionTypes.LOGIN_USER, error),
-      );
-      console.error(error);
-    }
+  
   };
 
   const { userProfile, loading } = useProfile();
@@ -145,14 +125,14 @@ const Login = (props: LoginProps) => {
   };
 
   //handleFacebookLoginResponse
-  const facebookResponse = (response: object) => {
-    signIn(response, "facebook");
-  };
+  // const facebookResponse = (response: object) => {
+  //   signIn(response, "facebook");
+  // };
 
-  //handleGoogleLoginResponse
-  const googleResponse = (response: object) => {
-    signIn(response, "google");
-  };
+  // //handleGoogleLoginResponse
+  // const googleResponse = (response: object) => {
+  //   signIn(response, "google");
+  // };
 
   return (
     <NonAuthLayoutWrapper>
@@ -164,7 +144,7 @@ const Login = (props: LoginProps) => {
               subtitle="Sign in to continue to Doot."
             />
 
-            {error && <Alert color="danger">{error}</Alert>}
+            {error && <Alert color="danger">{error?.message}</Alert>}
 
             <Form
               onSubmit={handleSubmit(onSubmitForm)}

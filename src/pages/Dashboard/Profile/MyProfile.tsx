@@ -21,6 +21,7 @@ const MyProfile = ({ basicDetails }: MyProfileProps) => {
   const fullName = basicDetails
     ? `${basicDetails.firstName} ${basicDetails.lastName}`
     : "-";
+
   return (
     <>
       <div className="user-profile-img">
@@ -41,44 +42,40 @@ const MyProfile = ({ basicDetails }: MyProfileProps) => {
                   <h5 className="text-white mb-0">My Profile</h5>
                 </div>
                 <div className="flex-shrink-0">
-                
-                 <Dropdown isOpen={dropdownOpen} toggle={toggle} >  
-                  
-                  <DropdownToggle
-                    color="none"
-                    className="btn nav-btn text-white"
-                    type="button"
-                    
-                  >
-                    <i className="bx bx-dots-vertical-rounded"></i>
-                  </DropdownToggle>
-                  <DropdownMenu className="dropdown-menu-start" >
-                    <DropdownItem
-                      className="d-flex align-items-center justify-content-between"
-                      href="#"
+                  <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                    <DropdownToggle
+                      color="none"
+                      className="btn nav-btn text-white"
+                      type="button"
                     >
-                      Info{" "}
-                      <i className="bx bx-info-circle ms-2 text-muted"></i>
-                    </DropdownItem>
-                    <DropdownItem
-                      className="d-flex align-items-center justify-content-between"
-                      href="#"
-                    >
-                      Setting <i className="bx bx-cog text-muted ms-2"></i>
-                    </DropdownItem>
-                    <DropdownItem divider />
-                    <DropdownItem
-                      className="d-flex align-items-center justify-content-between"
-                      href="#"
-                    >
-                      Help{" "}
-                      <i className="bx bx-help-circle ms-2 text-muted"></i>
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-                 </div>
+                      <i className="bx bx-dots-vertical-rounded"></i>
+                    </DropdownToggle>
+                    <DropdownMenu className="dropdown-menu-start">
+                      <DropdownItem
+                        className="d-flex align-items-center justify-content-between"
+                        href="#"
+                      >
+                        Info{" "}
+                        <i className="bx bx-info-circle ms-2 text-muted"></i>
+                      </DropdownItem>
+                      <DropdownItem
+                        className="d-flex align-items-center justify-content-between"
+                        href="#"
+                      >
+                        Setting <i className="bx bx-cog text-muted ms-2"></i>
+                      </DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem
+                        className="d-flex align-items-center justify-content-between"
+                        href="#"
+                      >
+                        Help{" "}
+                        <i className="bx bx-help-circle ms-2 text-muted"></i>
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
                 </div>
-             
+              </div>
             </div>
           </div>
         </div>
@@ -97,7 +94,9 @@ const MyProfile = ({ basicDetails }: MyProfileProps) => {
 
         <h5 className="font-size-16 mb-1 text-truncate">{fullName}</h5>
         <p className="text-muted font-size-14 text-truncate mb-0">
-          {basicDetails && basicDetails.title ? basicDetails.title : "-"}
+          {basicDetails && basicDetails.firstName
+            ? basicDetails.firstName
+            : "-"}
         </p>
       </div>
     </>

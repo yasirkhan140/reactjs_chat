@@ -23,3 +23,5 @@ export * from "./settings/actions";
 
 // chats
 export * from "./chats/actions";
+
+export * from "./auth/otp/actions";

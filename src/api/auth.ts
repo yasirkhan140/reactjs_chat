@@ -12,6 +12,8 @@ const postJwtForgetPwd = (data: any) =>
   api.create(url.POST_FAKE_JWT_PASSWORD_FORGET, data);
 
 const postLogin = (data: any) => api.create(url.POST_LOGIN, data);
+const postOtpVerify = (data: any) => api.create(url.OTP_VERIFY, data);
+const getOtpResend = () => api.get(url.OTP_VERIFY);
 
 const postJwtLogin = (data: any) => api.create(url.POST_FAKE_JWT_LOGIN, data);
 
@@ -40,4 +42,6 @@ export {
   postJwtRegister,
   changePassword,
   postSocialLogin,
+  postOtpVerify,
+  getOtpResend,
 };

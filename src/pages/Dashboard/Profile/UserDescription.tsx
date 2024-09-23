@@ -24,8 +24,8 @@ const UserDescription = ({ basicDetails }: UserDescriptionProps) => {
           </div>
           <div className="flex-grow-1">
             <p className="mb-0">
-              {basicDetails && basicDetails.fullName
-                ? basicDetails.fullName
+              {basicDetails && basicDetails.firstName
+                ? basicDetails.firstName + " " + basicDetails.lastName
                 : "-"}
             </p>
           </div>

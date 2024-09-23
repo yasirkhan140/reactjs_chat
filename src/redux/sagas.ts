@@ -11,7 +11,7 @@ import callsSaga from "./calls/saga";
 import bookmarksSaga from "./bookmarks/saga";
 import settingsSaga from "./settings/saga";
 import chatsSaga from "./chats/saga";
-
+import otpSaga from "./auth/otp/saga";
 export default function* rootSaga() {
   yield all([
     registerSaga(),
@@ -24,5 +24,6 @@ export default function* rootSaga() {
     bookmarksSaga(),
     settingsSaga(),
     chatsSaga(),
+    otpSaga(),
   ]);
 }

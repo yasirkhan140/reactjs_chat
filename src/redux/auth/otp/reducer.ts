@@ -1,13 +1,12 @@
 import { AuthOtpActionTypes, AuthOtpState } from "./types";
-import { otpVerify } from './actions';
 
 export const INIT_STATE: AuthOtpState = {
   otpverify: false,
   loading: false,
-  otpError:""
+  otpError: "",
 };
 
-const Login = (state = INIT_STATE, action: any) => {
+const Otp = (state = INIT_STATE, action: any) => {
   switch (action.type) {
     case AuthOtpActionTypes.API_RESPONSE_SUCCESS:
       switch (action.payload.actionType) {
@@ -19,7 +18,9 @@ const Login = (state = INIT_STATE, action: any) => {
             otpverify: true,
             isUserLogin: true,
             isUserLogout: false,
+            otpSuccessMessgae: "otp verifed successfully",
           };
+
         case AuthOtpActionTypes.OTP_RESEND:
           return {
             ...state,
@@ -27,6 +28,7 @@ const Login = (state = INIT_STATE, action: any) => {
             isUserLogout: false,
             otpverify: false,
             isUserLogin: false,
+            otpSuccessMessgae: "otp resend successfully",
           };
         default:
           return { ...state };
@@ -37,7 +39,7 @@ const Login = (state = INIT_STATE, action: any) => {
         case AuthOtpActionTypes.OTP_VERIFY:
           return {
             ...state,
-            error: action.payload.error,
+            otpError: action.payload.error,
             isUserLogin: false,
             otpverify: false,
             loading: false,
@@ -46,9 +48,11 @@ const Login = (state = INIT_STATE, action: any) => {
           return {
             ...state,
             loading: false,
+            otpError: action.payload.error,
             otpverify: false,
             isUserLogin: false,
             isUserLogout: false,
+            otpSuccessMessgae: "",
           };
         default:
           return { ...state };
@@ -59,7 +63,8 @@ const Login = (state = INIT_STATE, action: any) => {
         ...state,
         loading: true,
         isUserLogin: false,
-        otpVerify:false,
+        otpVerify: false,
+        otpSuccessMessgae: "",
       };
     }
 
@@ -68,11 +73,12 @@ const Login = (state = INIT_STATE, action: any) => {
         ...state,
         loading: true,
         isUserLogout: false,
-        otpVerify:false
+        otpVerify: false,
+        otpSuccessMessgae: "",
       };
     default:
       return { ...state };
   }
 };
 
-export default Login;
+export default Otp;

@@ -8,37 +8,31 @@ import {
 } from "./actions";
 
 //Include Both Helper File with needed methods
-import {
-
-  setLoggeedInUser,
-} from "../../../helpers/firebase_helper";
+import { setLoggeedInUser } from "../../../helpers/firebase_helper";
 import { postLogin, postSocialLogin } from "../../../api/index";
 import toastNotify from "../../../utils/toast";
 
-
-
 function* loginUser({ payload: { user } }: any) {
   try {
-     if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
+    if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
       const response: Promise<any> = yield call(postLogin, user);
       setLoggeedInUser(response);
       yield put(
         authLoginApiResponseSuccess(AuthLoginActionTypes.LOGIN_USER, response),
       );
-      toastNotify("Login Successfully ","success")
+      toastNotify("Login Successfully ", "success");
     }
   } catch (error: any) {
     yield put(
       authLoginApiResponseError(AuthLoginActionTypes.LOGIN_USER, error),
     );
-    toastNotify(error?.message,"error")
+    toastNotify(error?.message, "error");
   }
 }
 
 function* socialLogin({ payload: { data, type } }: any) {
   try {
     if (process.env.REACT_APP_DEFAULTAUTH === "jwt") {
-      
       const response: Promise<any> = yield call(postSocialLogin, data);
       yield put(
         authLoginApiResponseSuccess(AuthLoginActionTypes.LOGIN_USER, response),

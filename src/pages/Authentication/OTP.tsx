@@ -16,7 +16,6 @@ import { useForm } from "react-hook-form";
 import { useProfile } from "../../hooks";
 
 //actions
-import { userForgetPassword } from "../../redux/actions";
 
 // components
 import NonAuthLayoutWrapper from "../../components/NonAutnLayoutWrapper";
@@ -24,6 +23,7 @@ import AuthHeader from "../../components/AuthHeader";
 import FormInput from "../../components/FormInput";
 import Loader from "../../components/Loader";
 import { createSelector } from "reselect";
+import { otpVerify } from "../../redux/auth/otp/actions";
 interface RecoverPasswordProps {}
 const OTP = (props: RecoverPasswordProps) => {
   // global store
@@ -37,29 +37,29 @@ const OTP = (props: RecoverPasswordProps) => {
   //   })
   // );
 
-
   const errorData = createSelector(
-    (state : any) => state.ForgetPassword,
-    (state) => ({
-      forgetError: state.forgetError,
-      forgetSuccessMsg: state.forgetSuccessMsg,
-      forgetPassLoading: state.loading,
-
-    })
+    (state: any) => state.Otp,
+    state => ({
+      otpError: state.otpError,
+      otpSuccessMessgae: state.otpSuccessMsg,
+      otpLoading: state.loading,
+    }),
   );
   // Inside your component
-  const { forgetError,forgetSuccessMsg ,forgetPassLoading} = useAppSelector(errorData);
+  const { otpError, otpSuccessMessgae, otpLoading } = useAppSelector(errorData);
 
   const resolver = yupResolver(
     yup.object().shape({
       otp: yup
-        .number().max(999999)
-        .required("Please Enter a valid  otp").min(100000,"Please Enter a valid otp"),
-    })
+        .number()
+        .max(999999)
+        .required("Please Enter a valid  otp")
+        .min(100000, "Please Enter a valid otp"),
+    }),
   );
 
   const defaultValues: any = {
-    otp:""
+    otp: "",
   };
 
   const methods = useForm({ defaultValues, resolver });
@@ -71,11 +71,11 @@ const OTP = (props: RecoverPasswordProps) => {
   } = methods;
 
   const onSubmitForm = (values: object) => {
-    dispatch(userForgetPassword(values));
+    dispatch(otpVerify(values));
   };
 
-  const { userProfile, loading } = useProfile();
-  if (userProfile && !loading) {
+  const { otpData, loading } = useProfile();
+  if (otpData && !loading && otpData.otpverify) {
     return <Navigate to={{ pathname: "/dashboard" }} />;
   }
 
@@ -84,18 +84,15 @@ const OTP = (props: RecoverPasswordProps) => {
       <Row className=" justify-content-center my-auto">
         <Col sm={8} lg={6} xl={5} className="col-xxl-4">
           <div className="py-md-5 py-4">
-            <AuthHeader
-              title="OTP "
-              subtitle="Verify Your OTP"
-            />
+            <AuthHeader title="OTP " subtitle="Verify Your OTP" />
 
-            {forgetError && forgetError.message ? (
-              <Alert color="danger">{forgetError?.message}</Alert>
+            {otpError && otpError.message ? (
+              <Alert color="danger">{otpError?.message}</Alert>
             ) : null}
-            {forgetSuccessMsg ? (
-              <Alert color="success">{forgetSuccessMsg}</Alert>
+            {otpSuccessMessgae ? (
+              <Alert color="success">{otpSuccessMessgae}</Alert>
             ) : null}
-            {!forgetError && !forgetSuccessMsg && (
+            {!otpError && !otpSuccessMessgae && (
               <Alert color="info" className="text-center my-4">
                 Enter your Otp that sent to you on mail!
               </Alert>
@@ -105,14 +102,17 @@ const OTP = (props: RecoverPasswordProps) => {
               onSubmit={handleSubmit(onSubmitForm)}
               className="position-relative"
             >
-              {forgetPassLoading && <Loader />}
+              {otpLoading && <Loader />}
               <div className="mb-3">
                 <FormInput
                   label="OTP"
                   type="number"
                   name="otp"
                   maxLength={6}
-                  onInput={(e)=>{const input =e.target as HTMLInputElement; input.value=input.value.slice(0,input.maxLength)}}
+                  onInput={e => {
+                    const input = e.target as HTMLInputElement;
+                    input.value = input.value.slice(0, input.maxLength);
+                  }}
                   register={register}
                   errors={errors}
                   control={control}
@@ -127,7 +127,6 @@ const OTP = (props: RecoverPasswordProps) => {
                 </Button>
               </div>
             </Form>
-            
           </div>
         </Col>
       </Row>

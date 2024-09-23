@@ -10,7 +10,7 @@ import Calls from "./calls/reducer";
 import Bookmarks from "./bookmarks/reducer";
 import Settings from "./settings/reducer";
 import Chats from "./chats/reducer";
-
+import Otp from "./auth/otp/reducer";
 export default combineReducers({
   ForgetPassword,
   Login,
@@ -22,4 +22,5 @@ export default combineReducers({
   Bookmarks,
   Settings,
   Chats,
+  Otp,
 });

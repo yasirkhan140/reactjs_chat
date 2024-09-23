@@ -19,17 +19,17 @@ const Index = (props: IndexProps) => {
   // global store
   const { dispatch, useAppSelector } = useRedux();
 
-
   const errorData = createSelector(
-    (state : any) => state.Profile,
-    (state) => ({
+    (state: any) => state.Profile,
+    state => ({
       profileDetails: state.profileDetails,
       getProfileLoading: state.getProfileLoading,
       isProfileFetched: state.isProfileFetched,
-    })
+    }),
   );
   // Inside your component
-  const { profileDetails,getProfileLoading,isProfileFetched } = useAppSelector(errorData);
+  const { profileDetails, getProfileLoading, isProfileFetched } =
+    useAppSelector(errorData);
 
   // get user profile details
   useEffect(() => {
@@ -39,10 +39,10 @@ const Index = (props: IndexProps) => {
   return (
     <div className="position-relative">
       {getProfileLoading && !isProfileFetched && <Loader />}
-      <MyProfile basicDetails={profileDetails.basicDetails} />
+      <MyProfile basicDetails={profileDetails.data} />
 
       <AppSimpleBar className="p-4 profile-desc">
-        <UserDescription basicDetails={profileDetails.basicDetails} />
+        <UserDescription basicDetails={profileDetails.data} />
         <hr className="my-4" />
 
         <Media media={profileDetails.media} limit={2} />

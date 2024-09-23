@@ -6,16 +6,17 @@ export const POST_FAKE_JWT_PASSWORD_FORGET = "/jwt-forget-pwd";
 export const SOCIAL_LOGIN = "/social-login";
 export const JWT_REGISTER = "/post-jwt-register";
 export const POST_REGISTER = "/register";
-
+export const OTP_VERIFY = "/verify-otp";
+export const OTP_RESEND = "/regenerate-otp";
 export const USER_CHANGE_PASSWORD = "/user-change-password";
 
 // profile & settings
-export const GET_PROFILE_DETAILS = "/profile-details";
+export const GET_PROFILE_DETAILS = "/user";
 export const GET_USER_SETTINGS = "/user-settings";
 export const UPDATE_ETTINGS = "/update-user-settings";
 
 // contacts
-export const GET_CONTACTS = "/user-contacts";
+export const GET_CONTACTS = "/get-all-conversation";
 export const INVITE_CONTACT = "/invite-contact";
 
 // calls

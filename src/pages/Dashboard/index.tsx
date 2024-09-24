@@ -22,14 +22,13 @@ const Index = (props: IndexProps) => {
   //   selectedChat: state.Chats.selectedChat,
   // }));
   const errorData = createSelector(
-    (state : any) => state.Chats,
-    (state) => ({
+    (state: any) => state.Chats,
+    state => ({
       selectedChat: state.selectedChat,
-    })
+    }),
   );
   // Inside your component
-  const { selectedChat} = useAppSelector(errorData);
-
+  const { selectedChat } = useAppSelector(errorData);
 
   const { isChannel } = useConversationUserType();
 

@@ -9,14 +9,14 @@ export const POST_REGISTER = "/register";
 export const OTP_VERIFY = "/verify-otp";
 export const OTP_RESEND = "/regenerate-otp";
 export const USER_CHANGE_PASSWORD = "/user-change-password";
-
+export const REFRESH_TOKEN = "/token";
 // profile & settings
 export const GET_PROFILE_DETAILS = "/user";
 export const GET_USER_SETTINGS = "/user-settings";
 export const UPDATE_ETTINGS = "/update-user-settings";
 
 // contacts
-export const GET_CONTACTS = "/get-all-conversation";
+export const GET_CONTACTS = "/users";
 export const INVITE_CONTACT = "/invite-contact";
 
 // calls
@@ -29,9 +29,9 @@ export const UPDATE_BOOKMARK = "/bookmarks-update";
 
 // chats
 export const GET_FAVOURITES = "/get-favourites";
-export const GET_DIRECT_MESSAGES = "/get-direct-messages";
+export const GET_DIRECT_MESSAGES = "/get-all-conversation";
 export const GET_CHANNELS = "/get-channles";
-export const ADD_CONTACTS = "/add-contact";
+export const ADD_CONTACTS = "/create-conversation";
 export const CREATE_CHANNEL = "/create-channel";
 export const GET_CHAT_USER_DETAILS = "/get-user-details";
 export const GET_CHAT_USER_CONVERSATIONS = "/get-user-conversations";

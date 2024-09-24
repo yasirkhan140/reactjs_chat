@@ -21,7 +21,9 @@ const postJwtLogin = (data: any) => api.create(url.POST_FAKE_JWT_LOGIN, data);
 const postRegister = (data: any) => {
   return api.create(url.POST_REGISTER, data);
 };
-
+const getrefreshToken = () => {
+  return api.get(url.REFRESH_TOKEN);
+};
 // Register Method
 const postJwtRegister = (data: any) => {
   return api.create(url.JWT_REGISTER, data);
@@ -44,4 +46,5 @@ export {
   postSocialLogin,
   postOtpVerify,
   getOtpResend,
+  getrefreshToken,
 };

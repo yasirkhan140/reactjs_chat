@@ -25,7 +25,7 @@ export const getChannels = () => ({
 
 export const addContacts = (contacts: Array<string | number>) => ({
   type: ChatsActionTypes.ADD_CONTACTS,
-  payload: contacts,
+  payload: { secondUserId: contacts },
 });
 
 export interface CreateChannelPostData {
@@ -50,7 +50,7 @@ export const getChatUserDetails = (selectedChat: string | number | null) => ({
 });
 
 export const getChatUserConversations = (
-  selectedChat: string | number | null
+  selectedChat: string | number | null,
 ) => ({
   type: ChatsActionTypes.GET_CHAT_USER_CONVERSATIONS,
   payload: selectedChat,
@@ -83,7 +83,7 @@ export const receiveMessageFromUser = (id: number | string) => ({
 
 export const deleteMessage = (
   userId: number | string,
-  messageId: number | string
+  messageId: number | string,
 ) => ({
   type: ChatsActionTypes.DELETE_MESSAGE,
   payload: { userId, messageId },
@@ -126,9 +126,8 @@ export const readConversation = (id: number | string) => ({
 export const deleteImage = (
   userId: number | string,
   messageId: number | string,
-  imageId: number | string
+  imageId: number | string,
 ) => ({
   type: ChatsActionTypes.DELETE_IMAGE,
   payload: { userId, messageId, imageId },
 });
-

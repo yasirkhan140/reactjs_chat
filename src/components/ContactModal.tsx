@@ -98,22 +98,19 @@ interface ContactModalProps {
 const ContactModal = ({ isOpen, onClose, onAddContact }: ContactModalProps) => {
   // global store
 
-
   const { useAppSelector } = useRedux();
   // const { contactsList } = useAppSelector(state => ({
   //   contactsList: state.Contacts.contacts,
   // }));
 
-
-
   const errorData = createSelector(
-    (state : any) => state.Contacts,
-    (state) => ({
+    (state: any) => state.Contacts,
+    state => ({
       contactsList: state.contacts,
-    })
+    }),
   );
   // Inside your component
-  const { contactsList} = useAppSelector(errorData);
+  const { contactsList } = useAppSelector(errorData);
 
   /*
   contacts hook
@@ -132,7 +129,7 @@ const ContactModal = ({ isOpen, onClose, onAddContact }: ContactModalProps) => {
     setSearch(value);
     let modifiedContacts = [...contactsList];
     let filteredContacts = (modifiedContacts || []).filter((c: any) =>
-      c["firstName"].toLowerCase().includes(value.toLowerCase())
+      c["firstName"].toLowerCase().includes(value.toLowerCase()),
     );
     const formattedContacts = divideByKey("firstName", filteredContacts);
     setContacts(formattedContacts);
@@ -177,9 +174,9 @@ const ContactModal = ({ isOpen, onClose, onAddContact }: ContactModalProps) => {
       className="contactModal"
     >
       <ModalHeader toggle={onClose} className="bg-primary">
-      <div className="modal-title modal-title-custom text-white font-size-16 bg-primary ">
-      Contacts
-      </div>
+        <div className="modal-title modal-title-custom text-white font-size-16 bg-primary ">
+          Contacts
+        </div>
       </ModalHeader>
       <ModalBody className="p-4">
         <InputGroup className="mb-4">
@@ -224,7 +221,7 @@ const ContactModal = ({ isOpen, onClose, onAddContact }: ContactModalProps) => {
                     selectedContacts={selectedContacts}
                     onSelectContact={onSelectContact}
                   />
-                )
+                ),
               )}
             </AppSimpleBar>
           </>

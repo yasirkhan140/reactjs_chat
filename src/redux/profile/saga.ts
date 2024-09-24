@@ -12,12 +12,12 @@ function* getProfileDetails() {
     yield put(
       profileApiResponseSuccess(
         ProfileActionTypes.GET_PROFILE_DETAILS,
-        response
-      )
+        response,
+      ),
     );
   } catch (error: any) {
     yield put(
-      profileApiResponseError(ProfileActionTypes.GET_PROFILE_DETAILS, error)
+      profileApiResponseError(ProfileActionTypes.GET_PROFILE_DETAILS, error),
     );
   }
 }

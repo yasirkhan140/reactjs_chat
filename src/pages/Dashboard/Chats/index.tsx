@@ -44,27 +44,38 @@ const Index = (props: IndexProps) => {
   const { dispatch, useAppSelector } = useRedux();
 
   const errorData = createSelector(
-    (state : any) => state.Contacts,
-    (props : any) => props.Chats,
-    (state,props) => ({
+    (state: any) => state.Contacts,
+    (props: any) => props.Chats,
+    (state, props) => ({
       isContactInvited: state.isContactInvited,
-        favourites: props.favourites,
-        directMessages: props.directMessages,
-        channels: props.channels,
-        isContactsAdded: props.isContactsAdded,
-        isChannelCreated: props.isChannelCreated,
-        selectedChat: props.selectedChat,
-        isFavouriteContactToggled: props.isFavouriteContactToggled,
-        archiveContacts: props.archiveContacts,
-        isContactArchiveToggled: props.isContactArchiveToggled,
-        chatUserDetails:props.chatUserDetails,
-    })
+      favourites: props.favourites,
+      directMessages: props.directMessages.data,
+      channels: props.channels,
+      isContactsAdded: props.isContactsAdded,
+      isChannelCreated: props.isChannelCreated,
+      selectedChat: props.selectedChat,
+      isFavouriteContactToggled: props.isFavouriteContactToggled,
+      archiveContacts: props.archiveContacts,
+      isContactArchiveToggled: props.isContactArchiveToggled,
+      chatUserDetails: props.chatUserDetails,
+    }),
   );
 
   // Inside your component
-  const {isContactInvited, favourites, directMessages, channels, isContactsAdded, isChannelCreated, selectedChat, isFavouriteContactToggled,
-    archiveContacts, isContactArchiveToggled, chatUserDetails} = useAppSelector(errorData);
-  
+  const {
+    isContactInvited,
+    favourites,
+    directMessages,
+    channels,
+    isContactsAdded,
+    isChannelCreated,
+    selectedChat,
+    isFavouriteContactToggled,
+    archiveContacts,
+    isContactArchiveToggled,
+    chatUserDetails,
+  } = useAppSelector(errorData);
+
   // get data
 
   useEffect(() => {
@@ -194,16 +205,16 @@ const Index = (props: IndexProps) => {
     const inputValue: any = document.getElementById("serachChatUser");
     const filter: any = inputValue.value.toUpperCase();
     const ul: any = document.querySelector(".chat-room-list");
-      li = ul.getElementsByTagName("li");
-      for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("a")[0];
-        txtValue = a.textContent || a.innerText;
-        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-          li[i].style.display = "";
-        } else {
-          li[i].style.display = "none";
-        }
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+      a = li[i].getElementsByTagName("a")[0];
+      txtValue = a.textContent || a.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        li[i].style.display = "";
+      } else {
+        li[i].style.display = "none";
       }
+    }
   };
 
   return (

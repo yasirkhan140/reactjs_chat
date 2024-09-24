@@ -12,7 +12,7 @@ const Calls = (state = INIT_STATE, action: any) => {
         case CallsActionTypes.GET_CALLS:
           return {
             ...state,
-            calls: action.payload.data,
+            calls: action.payload.data?.data,
             isCallsFetched: true,
             getCallsLoading: false,
           };

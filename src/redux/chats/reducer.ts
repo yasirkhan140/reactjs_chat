@@ -20,7 +20,7 @@ const Chats = (state = INIT_STATE, action: any) => {
         case ChatsActionTypes.GET_FAVOURITES:
           return {
             ...state,
-            favourites: action.payload.data,
+            favourites: action.payload.data?.data,
             isFavouritesFetched: true,
             getFavouritesLoading: false,
           };
@@ -35,7 +35,7 @@ const Chats = (state = INIT_STATE, action: any) => {
         case ChatsActionTypes.GET_CHANNELS:
           return {
             ...state,
-            channels: action.payload.data,
+            channels: action.payload.data?.data,
             isChannelsFetched: true,
             getChannelsLoading: false,
             isChannelCreated: false,
@@ -55,14 +55,14 @@ const Chats = (state = INIT_STATE, action: any) => {
         case ChatsActionTypes.GET_CHAT_USER_DETAILS:
           return {
             ...state,
-            chatUserDetails: action.payload.data,
+            chatUserDetails: action.payload.data?.data,
             isUserDetailsFetched: true,
             getUserDetailsLoading: false,
           };
         case ChatsActionTypes.GET_CHAT_USER_CONVERSATIONS:
           return {
             ...state,
-            chatUserConversations: action.payload.data,
+            chatUserConversations: action.payload.data?.data,
             isUserConversationsFetched: true,
             getUserConversationsLoading: false,
             isUserMessageSent: false,
@@ -78,13 +78,13 @@ const Chats = (state = INIT_STATE, action: any) => {
         case ChatsActionTypes.RECEIVE_MESSAGE_FROM_USER:
           return {
             ...state,
-            chatUserConversations: action.payload.data,
+            chatUserConversations: action.payload.data?.data,
           };
         case ChatsActionTypes.READ_MESSAGE:
           return {
             ...state,
             isMessageRead: true,
-            chatUserConversations: action.payload.data,
+            chatUserConversations: action.payload.data?.data,
           };
         case ChatsActionTypes.DELETE_MESSAGE:
           return {
@@ -104,7 +104,7 @@ const Chats = (state = INIT_STATE, action: any) => {
         case ChatsActionTypes.GET_CHANNEL_DETAILS:
           return {
             ...state,
-            chatUserDetails: { ...action.payload.data, isChannel: true },
+            chatUserDetails: { ...action.payload.data?.data, isChannel: true },
             isChannelDetailsFetched: true,
             getUserDetailsLoading: false,
           };
@@ -116,7 +116,7 @@ const Chats = (state = INIT_STATE, action: any) => {
         case ChatsActionTypes.GET_ARCHIVE_CONTACT:
           return {
             ...state,
-            archiveContacts: action.payload.data,
+            archiveContacts: action.payload.data?.data,
             isArchiveContactFetched: true,
             isContactArchiveToggled: false,
           };

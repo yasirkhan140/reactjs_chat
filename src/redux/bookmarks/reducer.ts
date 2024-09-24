@@ -12,7 +12,7 @@ const Bookmarks = (state = INIT_STATE, action: any) => {
         case BookmarksActionTypes.GET_BOOKMARKS:
           return {
             ...state,
-            bookmarks: action.payload.data,
+            bookmarks: action.payload.data?.data,
             isBookmarksFetched: true,
             getBookmarksLoading: false,
             isBookmarkUpdated: false,

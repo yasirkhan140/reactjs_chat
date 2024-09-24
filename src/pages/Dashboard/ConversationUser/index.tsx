@@ -38,8 +38,8 @@ const Index = ({ isChannel }: IndexProps) => {
   const { dispatch, useAppSelector } = useRedux();
 
   const errorData = createSelector(
-    (state : any) => state.Chats,
-    (state) => ({
+    (state: any) => state.Chats,
+    state => ({
       chatUserDetails: state.chatUserDetails,
       chatUserConversations: state.chatUserConversations,
       isUserMessageSent: state.isUserMessageSent,
@@ -47,11 +47,18 @@ const Index = ({ isChannel }: IndexProps) => {
       isMessageForwarded: state.isMessageForwarded,
       isUserMessagesDeleted: state.isUserMessagesDeleted,
       isImageDeleted: state.isImageDeleted,
-    })
+    }),
   );
   // Inside your component
-  const {chatUserDetails,chatUserConversations,isUserMessageSent, isMessageDeleted,isMessageForwarded ,isUserMessagesDeleted,
-    isImageDeleted} = useAppSelector(errorData);
+  const {
+    chatUserDetails,
+    chatUserConversations,
+    isUserMessageSent,
+    isMessageDeleted,
+    isMessageForwarded,
+    isUserMessagesDeleted,
+    isImageDeleted,
+  } = useAppSelector(errorData);
 
   const onOpenUserDetails = () => {
     dispatch(toggleUserDetailsTab(true));
@@ -84,7 +91,7 @@ const Index = ({ isChannel }: IndexProps) => {
       attachments: data.attachments && data.attachments,
       meta: {
         receiver: chatUserDetails.id,
-        sender: userProfile.uid,
+        sender: userProfile.id,
       },
     };
 
@@ -106,7 +113,6 @@ const Index = ({ isChannel }: IndexProps) => {
     }
     setReplyData(null);
   };
-
 
   useEffect(() => {
     if (

@@ -12,7 +12,7 @@ const ForgetPassword = (state = INIT_STATE, action: any) => {
         case AuthForgetPassActionTypes.FORGET_PASSWORD:
           return {
             ...state,
-            forgetSuccessMsg: action.payload.data,
+            forgetSuccessMsg: action.payload.data?.data,
             emailSended: true,
             loading: false,
           };

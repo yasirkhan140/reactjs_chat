@@ -34,8 +34,8 @@ import { io } from "socket.io-client";
 interface IndexProps {
   isChannel: boolean;
 }
-const socket = io('ws://localhost:8001', {
-  transports: ['websocket']  // Ensure WebSocket is explicitly specified
+const socket = io("ws://localhost:8001", {
+  transports: ["websocket"], // Ensure WebSocket is explicitly specified
 }).connect();
 const Index = ({ isChannel }: IndexProps) => {
   // global store
@@ -86,7 +86,7 @@ const Index = ({ isChannel }: IndexProps) => {
   /*
   send message
   */
-  
+
   const onSend = (data: any) => {
     let params: any = {
       text: data.text && data.text,
@@ -103,27 +103,27 @@ const Index = ({ isChannel }: IndexProps) => {
     if (replyData && replyData !== null) {
       params["replyOf"] = replyData;
     }
-socket.emit("chat message","22",params.text)
+    socket.emit("chat message", "22", params.text);
     dispatch(onSendMessage(params));
-    if (!isChannel) {
-      setTimeout(() => {
-        dispatch(receiveMessage(chatUserDetails.id));
-      }, 1000);
-      setTimeout(() => {
-        dispatch(readMessage(chatUserDetails.id));
-      }, 1500);
-      setTimeout(() => {
-        dispatch(receiveMessageFromUser(chatUserDetails.id));
-      }, 2000);
-    }
+    // if (!isChannel) {
+    //   setTimeout(() => {
+    //     dispatch(receiveMessage(chatUserDetails.id));
+    //   }, 1000);
+    //   setTimeout(() => {
+    //     dispatch(readMessage(chatUserDetails.id));
+    //   }, 1500);
+    //   setTimeout(() => {
+    //     dispatch(receiveMessageFromUser(chatUserDetails.id));
+    //   }, 2000);
+    // }
     setReplyData(null);
   };
 
-useEffect(() => {
-  socket.on('recieved message', (data) => console.log(data));
-}, [socket]);
-   
- 
+  useEffect(() => {
+    socket.emit("join conversation", "22");
+    socket.on("recieved message", (data: any) => console.log(data));
+  }, [socket]);
+
   useEffect(() => {
     if (
       isUserMessageSent ||
@@ -134,7 +134,6 @@ useEffect(() => {
     ) {
       dispatch(getChatUserConversations(chatUserDetails.id));
     }
-    
   }, [
     dispatch,
     isUserMessageSent,
@@ -143,7 +142,6 @@ useEffect(() => {
     isMessageForwarded,
     isUserMessagesDeleted,
     isImageDeleted,
-    
   ]);
 
   const onDeleteMessage = (messageId: string | number) => {

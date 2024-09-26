@@ -5,8 +5,10 @@ import classnames from "classnames";
 // interface
 import { UserTypes } from "../../../data/chat";
 import { STATUS_TYPES } from "../../../constants";
+import { useSelector } from "react-redux";
 interface ChatUserType extends UserTypes {
   secondUser?: UserTypes;
+  user?: UserTypes;
 }
 interface ChatUserProps {
   user: ChatUserType;
@@ -14,7 +16,9 @@ interface ChatUserProps {
   onSelectChat: (id: number | string) => void;
 }
 const ChatUser = ({ user, selectedChat, onSelectChat }: ChatUserProps) => {
-  const chatUser = user.secondUser;
+  const profileDetails= useSelector((state:any)=>state.Profile?.profileDetails?.data)
+  console.log(profileDetails)
+  const chatUser = profileDetails.id===user.secondUser?.id?user.user:user.secondUser;
   const fullName = `${chatUser?.firstName} ${chatUser?.lastName}`;
   const shortName = `${chatUser?.firstName.charAt(0)}${chatUser?.lastName.charAt(0)}`;
 

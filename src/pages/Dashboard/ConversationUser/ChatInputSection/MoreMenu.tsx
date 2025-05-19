@@ -5,6 +5,7 @@ import { Collapse, Card, CardBody, Input, Label } from "reactstrap";
 
 // swiper
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperClass } from 'swiper';
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -53,7 +54,7 @@ const MoreMenu = ({
       spaceBetween={20}
       slidesPerView={6}
       onSlideChange={() => ('slide change')}
-      onSwiper={(swiper) => (swiper)}
+      onSwiper={(swiper:SwiperClass) => (swiper)}
     >
        {/* Attached */}
       <SwiperSlide>
